@@ -58,7 +58,20 @@ app.get("/users",(req,res)=>{
     try {
         const decode = jwt.verify(token,jwtpassword);
         const username = decode.username;
-        return res.json({username});
+        return res.json({
+           users : ALL_users.filter((element) => {
+                if (element.username === username )
+                    {
+                        return false ;
+                    }
+                    else
+                    {
+                        return true ;
+                    }
+                
+              
+            })
+        });
 
     }
     catch(err)
