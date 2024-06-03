@@ -20,7 +20,7 @@ async function adminMiddleware(req, res, next) {
 
             }
        
-        req.admin = Admin;
+        req.admin = admin_info;
         next ();
        
       
