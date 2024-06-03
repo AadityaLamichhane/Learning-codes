@@ -8,9 +8,9 @@ const mongoose = require("mongoose");
 const app = express();
 app.use(express.json());
 
-//conneting the database to the application
+//conneting the database to the applicationz
 
-mongoose.connect("mongodb+srv://AadityaLamichhane:these_path_is_hidden_in_git_only")    //idk if i should be conserned about these but i hve decided not to include the info about the database path connectionlink
+mongoose.connect("mongodb+srv://AadityaLamichhane:RjVbumetcWMjvcbf@cluster0.3jtyyty.mongodb.net/user_app")    //idk if i should be conserned about these but i hve decided not to include the info about the database path connectionlink
 const User = mongoose.model( 'users',{name : String ,email : String ,password : String }); //saysthat ki my model is for the Users (table) and model include name with string ans so on..
 
 
@@ -28,15 +28,21 @@ app.post("/signup", async function(req,res)
             return res.status(400).send("username already exist ");
 
         }
-        //saving things ont he backend mongodb
-        const user = new User({
-            username :username ,
-            password :password,
-            name :name ,
+        else{
+            const user = new User({
+                name:name,
+                email:username,
+                password:password
+    
+                
+            });
+            user.save();
+            return res.status(200).json({msg:"Done"});
 
-        });
-        user.save();
-        return res.status(200).json({msg:"Done"});
+        }
+        //saving things ont he backend mongodb
+       
+        
 
 });
 app.listen(3000,()=>
