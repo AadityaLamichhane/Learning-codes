@@ -10,7 +10,7 @@ app.use(express.json());
 
 //conneting the database to the applicationz
 
-mongoose.connect("mongodb+srv://AadityaLamichhane:RjVbumetcWMjvcbf@cluster0.3jtyyty.mongodb.net/user_app")    //idk if i should be conserned about these but i hve decided not to include the info about the database path connectionlink
+mongoose.connect("url")    //idk if i should be conserned about these but i hve decided not to include the info about the database path connectionlink
 const User = mongoose.model( 'users',{name : String ,email : String ,password : String }); //saysthat ki my model is for the Users (table) and model include name with string ans so on..
 
 
