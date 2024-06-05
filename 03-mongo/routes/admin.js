@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const mongoose = require("mongoose");
-mongoose.connect("mongodb+srv://AadityaLamichhane:RjVbumetcWMjvcbf@cluster0.3jtyyty.mongodb.net/userApp");
+mongoose.connect("url");
 
 const {Admin , Course}  = require("../db");
 
