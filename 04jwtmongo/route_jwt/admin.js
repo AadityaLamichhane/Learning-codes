@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const adminMiddleware = require("../middleware/admin");
+const adminMiddleware = require("../middleware_jwt/admin");
 const router = Router();
 const { Admin , key }=require("../db/index.js");
 
