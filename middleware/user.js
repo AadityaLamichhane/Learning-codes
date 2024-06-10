@@ -1,23 +1,33 @@
-//connecting the admin.js user model in the file  
- const { User }= require("../db");
 
+const {User} =require("../db/index.js");
+const {key} = require("../db/index.js");
+const jwtwebtoken = require('jsonwebtoken');
 
-
-function userMiddleware(req, res, next) {
-    const username = req.headers.username;
-    const password = req.headers.password;
-    if(!username || !password)
+async function userMiddleware(req, res, next) {
+    const {authorization} = req.headers;
+    if(!authorization)
         {
-            return res.status(400).json({massage:"Invalid username or password"});
+            return res.status(400).json({massage:"No Credential was given to the server"});
+        }
+        //Checking the verification of the  user
+        try{
+            const verify_user =   jwtwebtoken.verify(authorization,key);
+            console.log(`This is verified user that are verified using the jwt key ${verify_user}`);
+            
+            const user_exist =  await User.findOne({username:verify_user.username});
+            if(!user_exist)
+                {
+                    return res.status(400).json({massage:"User donnt exst "});
+                }
+        next();
+            
+        }
+        catch{
+            return res.status(400).json({massage:"Something went wrong Couldnot Veriify You"});
+        }
 
-        }
-    const data =User.findOne({username:username , password: password});
-    if(!data)
-        {
-            return res.status(400).json({massage:"No user found with that info"});
-        }
-        req.user = User;
-     next();   
+        //Checking if the  user exist previously or not 
+      
     // Implement user auth logic
     // You need to check the headers and validate the user from the user DB. Check readme for the exact headers to be expected
 }

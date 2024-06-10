@@ -1,32 +1,40 @@
+const {Admin, User} = require("../db");
+const {key} = require("../db/index.js");
+const jwtwebtoken = require('jsonwebtoken');
+
 // Middleware for handling auth
-const {Admin} =require("../db");
-
-
-
-
-
 async function adminMiddleware(req, res, next) {
-    const username =req.headers.username;
-    const password =req.headers.password;
-    if(!username || !password)
+
+    const {authorization} = req.headers;
+
+    ///checking the field
+    
+    if(!authorization)
         {
-            return res.status(400).json({msg:"Provide full information"});
-
+            return res.status(404).json({massage:"Empty credential to account"});
         }
-        const admin_info = await Admin.findOne({username:username, password:password});
-        if (!admin_info)
-            {
-               return res.status(400).json({msg:"NO user found with that information"});
 
+        //geting the verification for the user 
+
+    try {
+        const verifiied_profile =  jwtwebtoken.verify(authorization,key);
+        
+        const user_data =await  Admin.findOne({username:verifiied_profile.username});
+        
+        if(!user_data)
+            {
+                return res.status(400).json({massage:"NO user was found with that credetial "});
             }
-       
-        req.admin = Admin;
-        next ();
-       
-      
-       
-    // Implement admin auth logic
-    // You need to check the headers and validate the admin from the admin DB. Check readme for the exact headers to be expected
+    }
+    catch(error)
+    {
+        return res.status(500).json({massage:"Something went wrong on verification of the profile"});
+    }
+    
+   
+        //All sorted
+        next();
+
 }
 
 module.exports = adminMiddleware;
