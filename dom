@@ -1,0 +1,12 @@
+Learning DOM
+
+Noticing point :
+ When we select the element using the queryselector all we get the node list 
+and when we slect using the classname then we get the html collection 
+even though i previously thought it was object before learning anything when i learn a little i assumed it to be the array but its neither 
+its close to array but cant use function to the html collection map and push any of that 
+
+Solution : Well Array.from('name of the collection variable ') can be use to make the new array which again can be stored and can be used ..
+still in nodelist foreach can be used so that can be considered a pretty good solution 
+
+                                                                        
