@@ -15,13 +15,18 @@
 </body>
 
 <script>
-    function getSum()
+     function getSum()
     {
         const a = parseInt(document.getElementById('first').value);
         const b = parseInt(document.getElementById('Second').value);
         var sum = a+b;
       const conatainer = document.getElementById('result');
-      conatainer.innerHTML = sum;
+      fetch("https://sum-server.100xdevs.com/sum?a="+a+"&b="+b).then(function(responce)
+    {
+        responce.text().then(function(value){
+            console.log(value);
+        })
+    })
     }
 </script>
 
