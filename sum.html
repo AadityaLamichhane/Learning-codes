@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sum</title>
+</head>
+<body>
+   <input  autofocus type="text" placeholder="First number " id="first">
+
+   <input type="text" id = "Second" placeholder="Second number ">
+
+   <button onclick = "getSum()">Caculate Sum</button>
+   <div id = "result"> </div>
+</body>
+
+<script>
+    function getSum()
+    {
+        const a = parseInt(document.getElementById('first').value);
+        const b = parseInt(document.getElementById('Second').value);
+        var sum = a+b;
+      const conatainer = document.getElementById('result');
+      conatainer.innerHTML = sum;
+    }
+</script>
+
+</html>
