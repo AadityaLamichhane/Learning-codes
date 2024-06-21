@@ -6,16 +6,17 @@
     <title>Sum</title>
 </head>
 <body>
-   <input  autofocus type="text" placeholder="First number " id="first">
+   <input  oninput=" debounce();" type="text" placeholder="First number " id="first">
 
-   <input type="text" id = "Second" placeholder="Second number ">
+   <input oninput=" debounce();" type="text" id = "Second" placeholder="Second number ">
 
-   <button onclick = "getSum()">Caculate Sum</button>
+   
    <div id = "result"> </div>
 </body>
 
 <script>
-     function getSum()
+
+function getSum()
     {
         const a = parseInt(document.getElementById('first').value);
         const b = parseInt(document.getElementById('Second').value);
@@ -24,7 +25,7 @@
       fetch("https://sum-server.100xdevs.com/sum?a="+a+"&b="+b).then(function(responce)
     {
         responce.text().then(function(value){
-            console.log(value);
+            conatainer.innerHTML=sum;
         })
         /*
         const responce = await fetch ()
@@ -33,6 +34,18 @@
         */
     })
     }
+let timeout ;
+    function debounce ()
+    {
+        
+        clearTimeout(timeout);
+        timeout = setTimeout(()=>{
+            getSum();
+        },100);
+        
+
+    }
+    
 </script>
 
 </html>
