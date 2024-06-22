@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo</title>
+</head>
+<script>
+    let globalId = 0; 
+
+    function createChild(title,description,globalId)
+    {
+        
+        //making the child div 
+        let child = document.createElement("div");
+
+        const GrandChild = document.createElement("div");
+        GrandChild.innerHTML = title ;
+        
+        const SecondGrandchild = document.createElement("div");
+        SecondGrandchild.innerHTML  = description;
+
+        const thirdChild = document.createElement("button");
+        thirdChild.innerHTML  = "Mark as Done";
+
+        thirdChild.setAttribute("onclick",`markasdone(${globalId})`);
+        console.log((globalId))
+        child.appendChild(GrandChild);
+        child.appendChild(SecondGrandchild);
+        child.appendChild(thirdChild);
+        child.setAttribute("id",globalId);
+        return child ; 
+        
+    }
+
+    function addTodo()
+    {
+        const title = document.getElementById('title').value;
+        const description = document.getElementById('description').value;
+        const container = document.getElementById('container');
+
+
+        container.appendChild(createChild(title,description,globalId++));
+        console.log(title);
+        console.log(description); 
+        console.log(container); 
+
+    }
+    function markasdone(id){
+        //Get the id and select that id then change the inner button of that parent 
+        const doneContent = document.getElementById(id);
+        console.log(doneContent);
+    }
+
+    </script>
+<body>
+    <div>
+        <input  id = "title" type = "text" placeholder="title"></input>
+        <br>
+        <br>
+        <input  id ="description" type="text" placeholder='description'></input>
+        <br><br>
+        <button onclick  = "addTodo()">Add todo</button>
+        <div id ="container">
+
+        </div>
+    </div>
+    
+</body>
+</html>
