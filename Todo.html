@@ -5,55 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo</title>
 </head>
-<script>
-    let globalId = 0; 
 
-    function createChild(title,description,globalId)
-    {
-        
-        //making the child div 
-        let child = document.createElement("div");
-
-        const GrandChild = document.createElement("div");
-        GrandChild.innerHTML = title ;
-        
-        const SecondGrandchild = document.createElement("div");
-        SecondGrandchild.innerHTML  = description;
-
-        const thirdChild = document.createElement("button");
-        thirdChild.innerHTML  = "Mark as Done";
-
-        thirdChild.setAttribute("onclick",`markasdone(${globalId})`);
-        console.log((globalId))
-        child.appendChild(GrandChild);
-        child.appendChild(SecondGrandchild);
-        child.appendChild(thirdChild);
-        child.setAttribute("id",globalId);
-        return child ; 
-        
-    }
-
-    function addTodo()
-    {
-        const title = document.getElementById('title').value;
-        const description = document.getElementById('description').value;
-        const container = document.getElementById('container');
-
-
-        container.appendChild(createChild(title,description,globalId++));
-        console.log(title);
-        console.log(description); 
-        console.log(container); 
-
-    }
-    function markasdone(id){
-        //Get the id and select that id then change the inner button of that parent 
-        const doneContent = document.getElementById(id);
-        console.log(doneContent);
-        doneContent.children(3).innerHTML = "Done!"
-    }
-
-    </script>
 <body>
     <div>
         <input  id = "title" type = "text" placeholder="title"></input>
@@ -68,4 +20,79 @@
     </div>
     
 </body>
+<script>
+   
+let todoState=[];
+let globalId = 0;
+    //function to mke the todo 
+     function createChild(title,description,globalId)
+     {
+         
+         //making the child div 
+         let child = document.createElement("div");
+ 
+         const GrandChild = document.createElement("div");
+         GrandChild.innerHTML = title ;
+         
+         const SecondGrandchild = document.createElement("div");
+         SecondGrandchild.innerHTML  = description;
+ 
+         const thirdChild = document.createElement("button");
+         thirdChild.innerHTML  = "Mark as Done";
+ 
+         thirdChild.setAttribute("onclick",`markasdone(${globalId})`);
+         
+         child.appendChild(GrandChild);
+         child.appendChild(SecondGrandchild);
+         child.appendChild(thirdChild);
+         child.setAttribute("id",globalId);
+         return child ; 
+         
+     }
+
+     function addTodo() {
+      const title = document.getElementById("title").value;
+      const description = document.getElementById("description").value;
+      todoState.push({
+        title: title,
+        description: description,
+        id: globalId++,
+      })
+      updateState(todoState);
+    }
+
+
+      
+
+     function updateState(state)
+     {
+         const parent = document.getElementById('container');
+         parent.innerHTML = "";
+ 
+         for (let a = 0 ; a<state.length; a++)
+         {
+             //changing for every state 
+             const title = state[a].title;
+             const description = state[a].description;
+             //making new child wit the desied html syntax
+             const child = createChild(title,description,a);
+             parent.appendChild(child);
+         }
+     }
+ 
+   
+     function markasdone(id){
+         //Get the id and select that id then change the inner button of that parent 
+         const doneContent = document.getElementById(id);
+         
+         doneContent.children[2].innerHTML = "Done!"
+     }
+    window.setInterval(async function(){
+        const res = await fetch('https://sum-server.100xdevs.com/todos');
+        const json_dat = await res.json();
+        updateState(json_dat.todos);
+    },5000)
+    
+ 
+     </script>
 </html>
